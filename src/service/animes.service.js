@@ -28,10 +28,24 @@ const findByIdAnimesService = (parametroId) => {
 };
 
 const createAnimesService = (newAnime) => {
-  const newId = animes.length + 1;
-  newAnime.id = newId;
+  newAnime.id = newId();
   animes.push(newAnime);
   return newAnime;
+};
+
+const updateAnimesService = (newAnime, id) => {
+  const animeIndex = animes.findIndex((anime) => anime.id == id);
+
+  let animeToSplice = animes[animeIndex];
+  animeToSplice.name =
+    newAnime.name === undefined ? animes[animeIndex].name : newAnime.name;
+  animeToSplice.year =
+    newAnime.year === undefined ? animes[animeIndex].year : newAnime.year;
+  animeToSplice.autor =
+    newAnime.autor === undefined ? animes[animeIndex].autor : newAnime.autor;
+
+  animes.splice(animeIndex, 1, animeToSplice);
+  return animeToSplice;
 };
 
 const deleteAnimesService = (id) => {
@@ -39,10 +53,23 @@ const deleteAnimesService = (id) => {
   return animes.splice(animeIndex, 1);
 };
 
+function newId() {
+  let x = 1;
+  loop: while (true) {
+    for (let obj of animes) {
+      if (obj.id == x) {
+        x++;
+        continue loop;
+      }
+    }
+    return x;
+  }
+}
+
 module.exports = {
+  updateAnimesService,
   findAllAnimesService,
   findByIdAnimesService,
   createAnimesService,
   deleteAnimesService,
 };
-

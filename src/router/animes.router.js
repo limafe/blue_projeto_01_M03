@@ -5,8 +5,6 @@ router.get('/allAnimes', controllerAnimes.findAllAnimesController);
 
 router.get('/animes/:id', controllerAnimes.findByIdAnimesController);
 
-router.post('/create', controllerAnimes.createAnimesController);
-
 router.delete('/delete/:id', controllerAnimes.deleteAnimesController);
 
 module.exports = router;
